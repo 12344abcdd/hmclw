@@ -1,24 +1,36 @@
+plugins {
+    id 'java'
+}
 repositories {
     mavenCentral()
-    
+    maven { url "https://maven.fabricmc.net/" }
     }
 dependencies {
-    implementation "org.spongepowered:spongemixin:${spongemixin_version}"
+    implementation "net.fabricmc:sponge-mixin:${spongemixin_version}"
     implementation files("libs/HMCL-${hmcl_version}.jar")
 }
 
 def hmclJarName = "HMCL-${hmcl_version}.jar"
 def hmclJarPath = "libs/${hmclJarName}"
 def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmcl_version}/${hmclJarName}"
-
+import java.net.URL
 task downloadHmclJar {
+
+
+def hmclJarName = "HMCL-${hmcl_version}.jar"
+def hmclJarPath = "libs/${hmclJarName}"
+def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmcl_version}/${hmclJarName}"
+
+tasks.register('downloadHmclJar') {
+    def jarFile = file(hmclJarPath)
+    outputs.file jarFile
+
     doLast {
-        def file = file(hmclJarPath)
-        if (!file.exists()) {
+        if (!jarFile.exists()) {
             println "Downloading HMCL from ${hmclDownloadUrl}"
             new URL(hmclDownloadUrl).withInputStream { i ->
-                file.parentFile.mkdirs()
-                file.withOutputStream { it << i }
+                jarFile.parentFile.mkdirs()
+                jarFile.withOutputStream { it << i }
             }
             println "Downloaded HMCL jar to ${hmclJarPath}"
         } else {
@@ -26,5 +38,5 @@ task downloadHmclJar {
         }
     }
 }
-// 让依赖任务自动保证本地有 jar
+
 preBuild.dependsOn downloadHmclJar
