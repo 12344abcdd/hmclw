@@ -1,10 +1,12 @@
 plugins {
     id 'java'
 }
+
 repositories {
     mavenCentral()
     maven { url "https://maven.fabricmc.net/" }
-    }
+}
+
 dependencies {
     implementation "net.fabricmc:sponge-mixin:${spongemixin_version}"
     implementation files("libs/HMCL-${hmcl_version}.jar")
@@ -12,16 +14,11 @@ dependencies {
 
 def hmclJarName = "HMCL-${hmcl_version}.jar"
 def hmclJarPath = "libs/${hmclJarName}"
-def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmcl_version}/${hmclJarName}"
-import java.net.URL
-task downloadHmclJar {
-
-
-def hmclJarName = "HMCL-${hmcl_version}.jar"
-def hmclJarPath = "libs/${hmclJarName}"
-def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmcl_version}/${hmclJarName}"
+def hmclRelaseName = "v${hmcl_version}"
+def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmclRelaseName}/${hmclJarName}"
 
 tasks.register('downloadHmclJar') {
+    // 提前声明 jarFile 变量，确保在配置阶段完成
     def jarFile = file(hmclJarPath)
     outputs.file jarFile
 
@@ -38,6 +35,7 @@ tasks.register('downloadHmclJar') {
         }
     }
 }
-}
 
-preBuild.dependsOn downloadHmclJar
+tasks.named('build') {
+    dependsOn 'downloadHmclJar'
+}
