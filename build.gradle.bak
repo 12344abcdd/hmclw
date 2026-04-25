@@ -1,6 +1,6 @@
 repositories {
     mavenCentral()
-    maven { url "https://maven.fabricmc.net/" }
+    
     }
 dependencies {
     implementation "org.spongepowered:spongemixin:${spongemixin_version}"
