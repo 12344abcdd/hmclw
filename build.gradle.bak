@@ -7,14 +7,22 @@ repositories {
     maven { url "https://maven.fabricmc.net/" }
 }
 
+
+def javafx_version = "21.0.2" // 可根据需要选用新版本
+
 dependencies {
+    implementation "org.openjfx:javafx-base:${javafx_version}"
+    implementation "org.openjfx:javafx-controls:${javafx_version}"
+    implementation "org.openjfx:javafx-graphics:${javafx_version}"
+    // 如有需要还可添加：javafx-fxml, javafx-media, javafx-swing, javafx-web
     implementation "net.fabricmc:sponge-mixin:${spongemixin_version}"
     implementation files("libs/HMCL-${hmcl_version}.jar")
 }
 
 def hmclJarName = "HMCL-${hmcl_version}.jar"
 def hmclJarPath = "libs/${hmclJarName}"
-def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmcl_version}/${hmclJarName}"
+def hmclRelaseName = "v${hmcl_version}"
+def hmclDownloadUrl = "https://github.com/HMCL-dev/HMCL/releases/download/${hmclRelaseName}/${hmclJarName}"
 
 tasks.register('downloadHmclJar') {
     // 提前声明 jarFile 变量，确保在配置阶段完成

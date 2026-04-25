@@ -7,7 +7,14 @@ repositories {
     maven { url "https://maven.fabricmc.net/" }
 }
 
+
+def javafx_version = "11.0.11" // 可根据需要选用新版本
+
 dependencies {
+    implementation "org.openjfx:javafx-base:${javafx_version}"
+    implementation "org.openjfx:javafx-controls:${javafx_version}"
+    implementation "org.openjfx:javafx-graphics:${javafx_version}"
+    // 如有需要还可添加：javafx-fxml, javafx-media, javafx-swing, javafx-web
     implementation "net.fabricmc:sponge-mixin:${spongemixin_version}"
     implementation files("libs/HMCL-${hmcl_version}.jar")
 }
