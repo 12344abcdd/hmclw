@@ -8,7 +8,7 @@ repositories {
 }
 
 
-def javafx_version = "11.0.11" // 可根据需要选用新版本
+def javafx_version = "27-EA+14" // 可根据需要选用新版本
 
 dependencies {
     implementation "org.openjfx:javafx-base:${javafx_version}"
